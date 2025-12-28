@@ -49,7 +49,9 @@ try {
 } catch (error) {
   if (error instanceof z.ZodError) {
     console.log("Invalid env var");
-    console.error(JSON.stringify(error.flatten().fieldErrors, null, 2));
+
+    const flattenedErrors = z.flattenError(error);
+    console.error(JSON.stringify(flattenedErrors.fieldErrors, null, 2));
 
     error.issues.forEach((err) => {
       const path = err.path.join(".");
